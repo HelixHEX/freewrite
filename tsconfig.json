@@ -16,7 +16,7 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "baseUrl": "app",
+    "baseUrl": ".",
     "plugins": [
       {
         "name": "next"
