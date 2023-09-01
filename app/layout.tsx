@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/ui/modeToggle";
+import Providers from "@/lib/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,10 +23,12 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className + "h-screen dark:bg-black"}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Nav />
-            <div className="h-full w-full px-80 py-5">{children}</div>
-          </ThemeProvider>
+          <Providers>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <Nav />
+              <div className="h-full w-full px-80 py-5">{children}</div>
+            </ThemeProvider>
+          </Providers>
         </body>
       </html>
     </ClerkProvider>

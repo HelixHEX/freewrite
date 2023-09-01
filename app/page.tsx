@@ -6,6 +6,7 @@ import { useUser, useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Loading from "./loading";
 import { Button } from "@/components/ui/button";
+import { Suspense } from 'react'
 
 const Home = () => {
   const { userId } = useAuth();
