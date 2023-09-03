@@ -13,7 +13,7 @@ const Providers = ({ children }: { children: ReactNode }) => {
       <ReactQueryStreamedHydration>
         {children}
       </ReactQueryStreamedHydration>
-      {<ReactQueryDevtools initialIsOpen={false} />}
+      {/* {<ReactQueryDevtools initialIsOpen={false} />} */}
     </QueryClientProvider>
   );
 };
