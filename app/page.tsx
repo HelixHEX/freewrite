@@ -6,13 +6,16 @@ import { useUser, useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Loading from "./loading";
 import { Button } from "@/components/ui/button";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import Posts from "@/components/posts";
+import { useCreatePostMutation } from "@/lib/api";
 
 const Home = () => {
   const { userId } = useAuth();
   const router = useRouter();
   const { user } = useUser();
+  const [content, setContent] = useState<string>("");
+  const { isPending, mutate } = useCreatePostMutation();
 
   if (!userId) {
     router.push("/login");
@@ -20,6 +23,11 @@ const Home = () => {
 
   if (!user) {
     return <Loading />;
+  }
+
+  const createPost = () => {
+    if (!content.length) return;
+    mutate({userId: userId!, content});
   }
 
   return (
@@ -41,6 +49,8 @@ const Home = () => {
       </div>
       <div className="bg-slate-100 h-40 dark:bg-zinc-950 w-full  rounded-lg border-none mt-4">
         <Textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
           className=" bg-slate-100 dark:bg-zinc-950 h-20"
           placeholder="Start typing..."
         />
@@ -48,8 +58,8 @@ const Home = () => {
           {/* <Button className='bg-transparent hover:bg-zinc-200 w-8 h-8 hover:text-gray-800 text-gray-400'>
             <p className=''>@</p>
           </Button> */}
-          <Button className="h-8 ml-4">
-            <p>Post</p>
+          <Button onClick={createPost} disabled={isPending} className="h-8 ml-4">
+            {isPending ? <Loading /> : <p>Post</p>}
           </Button>
         </div>
       </div>

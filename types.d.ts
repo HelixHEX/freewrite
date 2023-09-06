@@ -5,3 +5,7 @@ interface Post {
   content: string;
   userId: string;
 }
+
+interface PostResponse {
+  posts: Post[] | undefined,
+}
