@@ -1,9 +1,23 @@
 import { NextResponse } from 'next/server'
 import {prisma} from '../../../lib/prisma'
+import { clerkClient } from '@clerk/nextjs/server'
 
 export const GET = async (reqeust: Request) => {
   const posts = await prisma.post.findMany()
-  return NextResponse.json(posts)
+
+  const postsWithUser = await Promise.all(posts.map(async (post) => {
+    const user = await clerkClient.users.getUser(post.userId)
+    return {
+      user: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        profileImage: user.profileImageUrl
+      },
+      ...post
+    }
+  }))
+  return NextResponse.json({posts: postsWithUser})
 }
 
 export const POST = async (request: Request) => {

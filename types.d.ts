@@ -6,6 +6,13 @@ interface Post {
   userId: string;
 }
 
+interface User {
+  firstName: string;
+  lastName: string;
+  username: string;
+  profileImage: string;
+}
+
 interface PostResponse {
   posts: Post[] | undefined,
 }

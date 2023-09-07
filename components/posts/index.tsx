@@ -5,7 +5,7 @@ const Posts = () => {
   const { posts } = usePostsQuery();
 
   useEffect(() => {
-    console.log(Array.isArray(posts));
+    console.log(posts);
   }, [posts]);
   return (
     <>

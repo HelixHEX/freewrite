@@ -1,5 +1,9 @@
 import { getBaseURL } from "./utils";
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -14,13 +18,13 @@ const fetchPosts = async () => {
 };
 
 export function usePostsQuery() {
-  const query = useSuspenseQuery<PostResponse, Error>({
+  const { data, isLoading, isError } = useSuspenseQuery<PostResponse, Error>({
     queryKey: ["posts"],
     queryFn: fetchPosts,
-  })
-
-  return query.data
-};
+  });
+  console.log(data.posts)
+  return { posts: data.posts, isLoading: isLoading, isError };
+}
 
 const createPost = (post: Post) => {
   return axios.post(`${baseURL}/api/posts`, post);
@@ -28,7 +32,7 @@ const createPost = (post: Post) => {
 
 export const useCreatePostMutation = () => {
   const { toast } = useToast();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createPost,
     onError: () => {
@@ -42,7 +46,7 @@ export const useCreatePostMutation = () => {
         title: "Post created",
         description: "Your post has been created",
       });
-      queryClient.invalidateQueries({queryKey: ['posts']})
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 };
