@@ -16,11 +16,7 @@ const Home = () => {
   const { user } = useUser();
   const [content, setContent] = useState<string>("");
   const { isPending, mutate } = useCreatePostMutation();
-
-  if (!userId) {
-    router.push("/login");
-  }
-
+  
   if (!user) {
     return <Loading />;
   }
@@ -28,6 +24,7 @@ const Home = () => {
   const createPost = () => {
     if (!content.length) return;
     mutate({userId: userId!, content});
+    setContent('')
   }
 
   return (
@@ -47,11 +44,11 @@ const Home = () => {
           <h2 className="text-l font-bold tracking-medium">{`${user.firstName} ${user.lastName}`}</h2>
         </div>
       </div>
-      <div className="bg-slate-100 h-40 dark:bg-zinc-950 w-full  rounded-lg border-none mt-4">
+      <div className="bg-slate-100 h-40 dark:bg-zinc-900 w-full  rounded-lg border-none mt-4">
         <Textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className=" bg-slate-100 dark:bg-zinc-950 h-20"
+          className=" bg-slate-100 dark:bg-zinc-900 h-20"
           placeholder="Start typing..."
         />
         <div className="flex justify-end h-1/2 mr-4 items-center">

@@ -1,18 +1,18 @@
 import { usePostsQuery } from "@/lib/api";
 import { useEffect } from "react";
+import Image from "next/image";
+import PostCard from "./card";
 
 const Posts = () => {
   const { posts } = usePostsQuery();
 
-  useEffect(() => {
-    console.log(posts);
-  }, [posts]);
   return (
     <>
       {posts?.map((post, index) => (
-        <div key={index}>
-          <h1>{post.content}</h1>
-        </div>
+        <PostCard 
+          key={index}
+          {...post}
+        />
       ))}
     </>
   );

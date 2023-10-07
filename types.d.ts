@@ -4,6 +4,7 @@ interface Post {
   updatedAt?: string;
   content: string;
   userId: string;
+  user?: User
 }
 
 interface User {
@@ -13,6 +14,15 @@ interface User {
   profileImage: string;
 }
 
+
+interface PostTest {
+  id?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  content: string;
+  userId: string;
+  user?: User
+}
 interface PostResponse {
-  posts: Post[] | undefined,
+  posts: PostTest[] | undefined,
 }

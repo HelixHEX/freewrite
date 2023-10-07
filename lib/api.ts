@@ -22,8 +22,7 @@ export function usePostsQuery() {
     queryKey: ["posts"],
     queryFn: fetchPosts,
   });
-  console.log(data.posts)
-  return { posts: data.posts, isLoading: isLoading, isError };
+  return { posts: data.posts, isLoading, isError };
 }
 
 const createPost = (post: Post) => {

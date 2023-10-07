@@ -3,16 +3,16 @@ import {prisma} from '../../../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
 
 export const GET = async (reqeust: Request) => {
-  const posts = await prisma.post.findMany()
+  const posts = await prisma.post.findMany({orderBy: {createdAt: 'desc'}})
 
   const postsWithUser = await Promise.all(posts.map(async (post) => {
-    const user = await clerkClient.users.getUser(post.userId)
+    const user = await clerkClient.users.getUser(post.userId, )
     return {
       user: {
         firstName: user.firstName,
         lastName: user.lastName,
         username: user.username,
-        profileImage: user.profileImageUrl
+        profileImage: user.imageUrl
       },
       ...post
     }
